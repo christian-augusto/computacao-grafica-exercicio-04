@@ -4,7 +4,7 @@ import com.jogamp.opengl.*;
 import com.jogamp.newt.opengl.GLWindow;
 import com.jogamp.opengl.util.*;
 
-public final class JanelaAlternaCor implements GLEventListener {
+public class JanelaAlternaCorE implements GLEventListener {
 	private GL4 gl;
 
 	private static int width = 600;
@@ -13,12 +13,12 @@ public final class JanelaAlternaCor implements GLEventListener {
 	private static float incremento = 0.005f;
 	private float r = 1.0f;
 	private float g = 0.0f;
-	private float b = 0.0f;
+	private float b = 1.0f;
 	private float incremento_red = 0.0f;
 	private float incremento_green = incremento;
-	private float incremento_blue = incremento;
+	private float incremento_blue = 0.0f;
 
-	public static void main(String[] s) {
+	public static void main(String[] args) {
 		System.out.println("main");
 
 		GLCapabilities caps = new GLCapabilities(GLProfile.get(GLProfile.GL4));
@@ -33,7 +33,7 @@ public final class JanelaAlternaCor implements GLEventListener {
 
 		// Finally we connect the GLEventListener application code to the GLWindow.
 
-		glWindow.addGLEventListener(new JanelaAlternaCor());
+		glWindow.addGLEventListener(new JanelaAlternaCorE());
 		Animator animator = new Animator();
 		animator.add(glWindow);
 		animator.start();
@@ -53,18 +53,31 @@ public final class JanelaAlternaCor implements GLEventListener {
 		g += incremento_green;
 		b += incremento_blue;
 
-		if( g >= 1.0 && incremento_red == 0.0f) {
+		if (g >= 1.0 && incremento_red == 0.0f && incremento_green == incremento && incremento_blue == 0.0f) {
 			System.out.println("Primeiro if");
 			r = 0.0f;
 			g = 1.0f;
-			b = 0.0f;
-			incremento_green = 0.0f;
+			b = 1.0f;
+
 			incremento_red = incremento;
-		} else if (b >= 1.0f && incremento_green == 0.0f) {
+			incremento_green = 0.0f;
+			incremento_blue = 0.0f;
+		} else if (r >= 1.0 && incremento_red == incremento && incremento_green == 0.0f && incremento_blue == 0.0f) {
 			System.out.println("Segundo if");
-			r = 0.0f;
+			r = 1.0f;
+			g = 1.0f;
+			b = 0.0f;
+
+			incremento_red = 0.0f;
+			incremento_green = 0.0f;
+			incremento_blue = incremento;
+		} else if (b >= 1.0 && incremento_red == 0.0f && incremento_green == 0.0f && incremento_blue == incremento) {
+			System.out.println("Terceiro if");
+			r = 1.0f;
 			g = 0.0f;
 			b = 1.0f;
+
+			incremento_red = 0.0f;
 			incremento_green = incremento;
 			incremento_blue = 0.0f;
 		}
